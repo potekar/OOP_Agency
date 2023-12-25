@@ -1,19 +1,16 @@
+import forms.LoginForm;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import loginForm.LoginForm;
+
+import java.sql.SQLException;
 
 public class Main extends Application{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        Database database=new Database();
+        database.DBConnect();
+        database.login("marko","marko123");
         launch(args);
     }
 
