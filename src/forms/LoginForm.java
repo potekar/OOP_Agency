@@ -1,18 +1,39 @@
 package forms;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import java.io.FileNotFoundException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import data.*;
+import javafx.stage.Stage;
+
+import javax.xml.crypto.Data;
 
 public class LoginForm {
     private static Scene scene;
-    public LoginForm() {
-        TextField tfUsername = new TextField();
-        PasswordField pfPassword = new PasswordField();
+    private static  Database database;
+    private TextField tfUsername = new TextField();
+    private PasswordField pfPassword = new PasswordField();
+    static Stage primaryStage;
+    public LoginForm(Database database, Stage primaryStage) throws FileNotFoundException{
+
+        this.database=database;
+        this.primaryStage=primaryStage;
+
+        Image image= new Image("/style/logo.png");
+        ImageView imageView=new ImageView(image);
+        imageView.setFitHeight(80);
+        imageView.setFitWidth(80);
+
+
         tfUsername.setPromptText("Username");
         pfPassword.setPromptText("Password");
 
@@ -20,23 +41,56 @@ public class LoginForm {
         Button btnCancel = new Button("Cancel");
         Button btnRegister = new Button("Register");
 
-        btnLogin.setOnAction(e -> System.out.println("Login button clicked"));
+        btnLogin.setOnAction(e-> {
+            try {
+                checkLogin();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         btnCancel.setOnAction(e -> System.exit(1));
-        btnRegister.setOnAction(e -> System.out.println("reg"));
+        btnRegister.setOnAction(e -> {
+            primaryStage.setScene(RegisterForm.getRegisterForm(database,primaryStage));
+            primaryStage.show();
+            System.out.println("clicked");
+        });
         btnRegister.setStyle("-fx-background-color: #20242b; -fx-text-fill: #4184cf;");
 
         VBox vbox = new VBox(10);
         vbox.setPadding(new Insets(10));
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll( tfUsername, pfPassword, btnLogin, btnCancel, btnRegister);
+        vbox.getChildren().addAll( imageView,tfUsername, pfPassword, btnLogin, btnCancel, btnRegister);
 
         scene = new Scene(vbox, 300, 400);
         scene.getStylesheets().add(getClass().getResource("/style/gui.css").toExternalForm());
     }
 
-    public static Scene getLoginForm()
+    public static Scene getLoginForm() throws FileNotFoundException
     {
+        LoginForm loginForm=new LoginForm(database,primaryStage);
         return scene;
+    }
+
+    private void checkLogin() throws SQLException {
+        String[] set=database.login(tfUsername.getText(),pfPassword.getText());
+
+        if (set==null)
+        {
+            System.out.println("no user found");
+        }
+        else
+        {
+            if (set[0].equals("admin"))
+            {
+                System.out.println("admin");
+            }
+
+            if (set[0].equals("user"))
+            {
+                System.out.println("user");
+            }
+        }
+
     }
 }
 
