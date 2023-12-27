@@ -1,0 +1,29 @@
+.root {
+    -fx-base: #20242b;
+    -fx-background-color: #20242b;
+    -fx-background-insets: 0;
+    -fx-padding: 40;
+}
+
+.label {
+    -fx-font-size: 14pt;
+    -fx-text-fill: #4184cf;
+}
+
+.button {
+    -fx-padding: 10;
+    -fx-font-size: 14pt;
+    -fx-background-color: #20242b;
+    -fx-text-fill:  #4184cf;
+    -fx-pref-width: 200px;
+    -fx-text-alignment: left;
+}
+
+.button:hover {
+    -fx-background-color: #284474;
+}
+
+.button:pressed {
+    -fx-background-color: #284474;
+}
+

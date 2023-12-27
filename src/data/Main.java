@@ -1,6 +1,7 @@
 package data;
 
 import forms.LoginForm;
+import forms.MainForm;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,8 +21,9 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        LoginForm login=new LoginForm(database,primaryStage);
-        Scene loginscene=login.getLoginForm();
+        //LoginForm login=new LoginForm(database,primaryStage);
+        MainForm main=new MainForm(database,primaryStage);
+        Scene loginscene=main.getMainForm();
 
         primaryStage.setScene(loginscene);
         primaryStage.show();

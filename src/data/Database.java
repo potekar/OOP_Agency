@@ -119,4 +119,24 @@ public class Database {
         }
         return false;
     }
+
+    public boolean searchBank (String jmbg,String acc)
+    {
+        try {
+            ResultSet set=null;
+            Statement statement=connection.createStatement();
+            set=statement.executeQuery("SELECT * FROM bankovni_racun");
+            while (set.next())
+            {
+                if (set.getString(2).equals(acc) && set.getString(3).equals(jmbg))
+                {
+                    return true;
+                }
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
