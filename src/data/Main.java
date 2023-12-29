@@ -23,7 +23,8 @@ public class Main extends Application{
 
         //LoginForm login=new LoginForm(database,primaryStage);
         MainForm main=new MainForm(database,primaryStage);
-        Scene loginscene=main.getMainForm();
+        LoginForm log=new LoginForm(database,primaryStage);
+        Scene loginscene=log.getLoginForm();
 
         primaryStage.setScene(loginscene);
         primaryStage.show();
