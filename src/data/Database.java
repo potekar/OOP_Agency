@@ -139,4 +139,20 @@ public class Database {
         }
         return false;
     }
+
+    public boolean changePassword(String username,String password)
+    {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE admin SET lozinka=? WHERE korisnicko_ime=?");
+            preparedStatement.setString(1,username);
+            preparedStatement.setString(2,password);
+            return true;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

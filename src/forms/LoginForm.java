@@ -27,6 +27,7 @@ public class LoginForm {
         this.database=database;
         this.primaryStage=primaryStage;
 
+
         Image image= new Image("/style/logo.png");
         ImageView imageView=new ImageView(image);
         imageView.setFitHeight(80);
@@ -84,12 +85,22 @@ public class LoginForm {
             lbError.setText("");
             if (set[0].equals("admin"))
             {
-                System.out.println("admin");
+                AdminForm adminForm=new AdminForm(database,primaryStage,set);
+
+                if(pfPassword.getText().equals("12345678"))
+                {
+                    adminForm.adminFirstLogin();
+                }
+
+                primaryStage.setScene(adminForm.getMainForm());
+                primaryStage.show();
             }
 
             if (set[0].equals("user"))
             {
-                System.out.println("user");
+                MainForm mainForm=new MainForm(database,primaryStage,set);
+                primaryStage.setScene(mainForm.getMainForm());
+                primaryStage.show();
             }
         }
 

@@ -26,4 +26,10 @@
 .button:pressed {
     -fx-background-color: #284474;
 }
+.text-area .content{
+    -fx-background-color: #282c34;
+}
+.table-view {
+    -fx-background-color: #282c34;
+}
 

@@ -19,14 +19,17 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.initStyle(StageStyle.DECORATED);
 
-        //LoginForm login=new LoginForm(database,primaryStage);
-        MainForm main=new MainForm(database,primaryStage);
+
+
         LoginForm log=new LoginForm(database,primaryStage);
-        Scene loginscene=log.getLoginForm();
+        Scene scene=log.getLoginForm();
 
-        primaryStage.setScene(loginscene);
+//        MainForm main=new MainForm(database,primaryStage);
+//        Scene scene=main.getMainForm();
+
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 }

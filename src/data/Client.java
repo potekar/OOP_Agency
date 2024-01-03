@@ -8,8 +8,12 @@ public class Client {
     private String accountNumber;
     private String username;
     private String password;
+    private int id;
 
-    public Client(String name, String lname, String phone, String jbmg, String accountNumber, String username, String password) {
+
+
+    public Client(int id,String name, String lname, String phone, String jbmg, String accountNumber, String username, String password) {
+        this.id=id;
         this.name = name;
         this.lname = lname;
         this.phone = phone;
@@ -18,7 +22,13 @@ public class Client {
         this.username = username;
         this.password = password;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public int getId() {
+        return id;
+    }
 
     public void setName(String name) {
         this.name = name;

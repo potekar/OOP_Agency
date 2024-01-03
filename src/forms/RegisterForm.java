@@ -129,7 +129,7 @@ public class RegisterForm {
                         lbError.setStyle("-fx-text-fill: #88c877;");
                         lbError.setText("Registration complete!");
 
-                        Client client=new Client(tfName.getText(),tfLame.getText(),tfPhone.getText(),jmbg.getText(),tfAccount.getText(),tfUsername.getText(),pfPassword.getText());
+                        Client client=new Client(0,tfName.getText(),tfLame.getText(),tfPhone.getText(),jmbg.getText(),tfAccount.getText(),tfUsername.getText(),pfPassword.getText());
                         database.register(client);
 
                         try {
