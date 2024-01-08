@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXController.Controller">
+    <left>
+        <AnchorPane prefHeight="700.0" prefWidth="300.0" style="-fx-background-color: #20242b;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="78.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../style/logo.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="lblNameLname" layoutX="75.0" layoutY="149.0" text="Name Lastname" textAlignment="CENTER" textFill="#4184cf">
+                    <font>
+                        <Font size="21.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblUsername" layoutX="116.0" layoutY="180.0" text="Username" textFill="#284474">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Button fx:id="btnNewTrip" layoutX="60.0" layoutY="274.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new trip">
+                    <font>
+                        <Font name="Roboto" size="16.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnNewAdmin" layoutX="60.0" layoutY="350.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new admin">
+                    <font>
+                        <Font name="Roboto" size="16.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnPasswordChange" layoutX="82.0" layoutY="628.0" mnemonicParsing="false" style="-fx-background-color: #20242b;" text="Change your password" textFill="#284474" />
+            <Button fx:id="btnAllTrips" layoutX="60.0" layoutY="426.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="All trips">
+               <font>
+                  <Font name="Roboto" size="16.0" />
+               </font>
+            </Button>
+            <Label layoutX="79.0" layoutY="518.0" text="Number of admins:" textFill="#4184cf">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAdminCount" layoutX="145.0" layoutY="544.0" text="1" textFill="#4184cf">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+    </left>
+    <right>
+        <AnchorPane prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #282c34;" BorderPane.alignment="CENTER">
+            <children>
+                <TabPane layoutX="21.0" layoutY="31.0" prefHeight="282.0" prefWidth="660.0" tabClosingPolicy="UNAVAILABLE" />
+            </children></AnchorPane>
+    </right>
+</BorderPane>
