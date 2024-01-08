@@ -3,10 +3,12 @@ package data;
 import forms.LoginForm;
 import forms.MainForm;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class Main extends Application{
@@ -18,18 +20,11 @@ public class Main extends Application{
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.initStyle(StageStyle.DECORATED);
-
-
-
-        LoginForm log=new LoginForm(database,primaryStage);
-        Scene scene=log.getLoginForm();
-
-//        MainForm main=new MainForm(database,primaryStage);
-//        Scene scene=main.getMainForm();
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.show();
     }
 }
