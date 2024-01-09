@@ -90,18 +90,18 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="166.0" layoutY="64.0">
+                              <TextField fx:id="tfTripname" layoutX="166.0" layoutY="64.0">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </TextField>
-                              <TextField layoutX="166.0" layoutY="145.0">
+                              <TextField fx:id="tfDestination" layoutX="166.0" layoutY="145.0">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </TextField>
-                              <DatePicker layoutX="166.0" layoutY="242.0" />
-                              <TextField layoutX="166.0" layoutY="319.0">
+                              <DatePicker fx:id="calDate" layoutX="166.0" layoutY="242.0" />
+                              <TextField fx:id="tfPrice" layoutX="166.0" layoutY="319.0">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
@@ -139,13 +139,13 @@
                                     <Font size="17.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="129.0" layoutY="26.0" prefHeight="45.0" prefWidth="154.0">
+                              <TextField fx:id="tfMName" layoutX="129.0" layoutY="26.0" prefHeight="45.0" prefWidth="154.0">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </TextField>
-                              <DatePicker layoutX="129.0" layoutY="146.0" />
-                              <Button fx:id="btnAddOneTrip1" layoutX="212.0" layoutY="560.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add trip">
+                              <DatePicker fx:id="calmArival" layoutX="129.0" layoutY="146.0" />
+                              <Button fx:id="btnAddMTrip" layoutX="212.0" layoutY="560.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add trip">
                                  <font>
                                     <Font name="Roboto" size="16.0" />
                                  </font>
@@ -155,7 +155,7 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <DatePicker layoutX="445.0" layoutY="146.0" />
+                              <DatePicker fx:id="calmReturn" layoutX="445.0" layoutY="146.0" />
                               <Label layoutX="14.0" layoutY="258.0" text="Hotel name:" textFill="#4184cf">
                                  <font>
                                     <Font size="21.0" />
@@ -166,13 +166,13 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="129.0" layoutY="84.0" prefHeight="45.0" prefWidth="154.0">
+                              <TextField fx:id="tfMDestination" layoutX="129.0" layoutY="84.0" prefHeight="45.0" prefWidth="154.0">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </TextField>
-                              <ComboBox layoutX="129.0" layoutY="191.0" prefHeight="45.0" prefWidth="154.0" />
-                              <TextField layoutX="129.0" layoutY="251.0" prefHeight="45.0" prefWidth="154.0">
+                              <ComboBox fx:id="cbMTrasport" layoutX="129.0" layoutY="191.0" prefHeight="45.0" prefWidth="154.0" />
+                              <TextField fx:id="tfMHotel" layoutX="129.0" layoutY="251.0" prefHeight="45.0" prefWidth="154.0">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
@@ -182,24 +182,24 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="129.0" layoutY="374.0" prefHeight="45.0" prefWidth="154.0">
+                              <TextField fx:id="tfPricePer" layoutX="129.0" layoutY="374.0" prefHeight="45.0" prefWidth="154.0">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </TextField>
-                              <ComboBox layoutX="129.0" layoutY="311.0" prefHeight="45.0" prefWidth="154.0" />
+                              <ComboBox fx:id="cbStars" layoutX="129.0" layoutY="311.0" prefHeight="45.0" prefWidth="154.0" />
                               <Label layoutX="14.0" layoutY="441.0" text="Room type:" textFill="#4184cf">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <ComboBox layoutX="128.0" layoutY="434.0" prefHeight="45.0" prefWidth="154.0" />
+                              <ComboBox fx:id="cbRoom" layoutX="128.0" layoutY="434.0" prefHeight="45.0" prefWidth="154.0" />
                               <Label layoutX="14.0" layoutY="502.0" text="Price:" textFill="#4184cf">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="129.0" layoutY="495.0" prefHeight="45.0" prefWidth="154.0">
+                              <TextField fx:id="tfTotalPrice" layoutX="129.0" layoutY="495.0" prefHeight="45.0" prefWidth="154.0">
                                  <font>
                                     <Font size="21.0" />
                                  </font>

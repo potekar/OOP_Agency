@@ -1,7 +1,34 @@
-.button:hover {
+.root {
+    -fx-base: #20242b;
+
+}
+
+.label{
+    -fx-text-fill: #4184cf;
+}
+
+.text-field{
+    -fx-background-color:  #282c34;
+    -fx-text-fill: #4184cf;
+}
+
+.button {
+    -fx-text-fill: #282c34;
+}
+#btnPasswordChange{
+    -fx-text-fill:#284474;
+}
+.button:hover{
     -fx-background-color: #284474;
 }
 
-.button:pressed {
+.button:pressed{
     -fx-background-color: #284474;
 }
+.text-area .content{
+    -fx-background-color: #282c34;
+}
+.table-view {
+    -fx-background-color: #282c34;
+}
+
