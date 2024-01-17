@@ -15,7 +15,7 @@ public class Main extends Application{
     static Database database=new Database();
     public static void main(String[] args) throws SQLException {
 
-        database.DBConnect();
+       // database.DBConnect();
         launch(args);
     }
 
