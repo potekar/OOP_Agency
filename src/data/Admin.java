@@ -7,6 +7,8 @@ public class Admin {
     private String username;
     private String password;
 
+    public static Admin activeAdmin;
+
     public Admin(int id, String name, String lastName, String username, String password) {
         this.id = id;
         this.name = name;
@@ -53,5 +55,13 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static Admin getActiveAdmin() {
+        return activeAdmin;
+    }
+
+    public static void setActiveAdmin(Admin activeAdmin) {
+        Admin.activeAdmin = activeAdmin;
     }
 }

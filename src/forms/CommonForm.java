@@ -1,39 +1,33 @@
 package forms;
 
 import data.Database;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.sql.SQLException;
+import java.io.IOException;
 
-public class AdminForm {
+public class CommonForm {
     private static Scene scene;
     static Stage primaryStage;
     private static Database database;
+
     private String[] set=new String[4];
-    public AdminForm(Database database, Stage primaryStage,String[] set)
+    public CommonForm(Database database, Stage primaryStage)
     {
         this.database=database;
         this.primaryStage= primaryStage;
-        this.set=set;
     }
 
-    //-----------------------------------------------------------------------------
-    public Scene getMainForm()
-    {
-        return scene;
-    }
-    //-----------------------------------------------------------------------------
-
-    public void adminFirstLogin(String ussername)
+    public static Scene changePassword(String ussername)
     {
         Label lbError=new Label();
         PasswordField pfPassword = new PasswordField();
@@ -47,20 +41,30 @@ public class AdminForm {
         pfPasswordCheck.setPromptText("Repeat password");
 
         Button btnLogin = new Button("Change");
-        Button btnCancel = new Button("Cancel");;
+        Button btnCancel = new Button("Back");;
 
         btnLogin.setOnAction(e-> {
             if(pfPassword.getText().equals(pfPasswordCheck.getText()))
             {
-                if(database.changeAdminPassword(ussername,pfPassword.getText()))
+                if(database.changeClientPassword(ussername,pfPassword.getText()))
                 {
-                    System.out.println("done");
-                    AdminForm adminForm=new AdminForm(database,primaryStage,set);
-                    primaryStage.setScene(adminForm.getMainForm());
+                    System.out.println("password changed");
                 }
             }
+            else
+            {
+                lbError.setText("Passwords must match");
+            }
         });
-        btnCancel.setOnAction(e -> System.exit(1));
+        btnCancel.setOnAction(e ->{
+            FXMLLoader fxmlLoader = new FXMLLoader(CommonForm.class.getResource("/FXController/clientScene.fxml"));
+            try {
+                scene=new Scene(fxmlLoader.load());
+                primaryStage.setScene(scene);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
 
         VBox vbox = new VBox(10);
@@ -69,7 +73,13 @@ public class AdminForm {
         vbox.getChildren().addAll( imageView, pfPassword, pfPasswordCheck,btnLogin, btnCancel);
 
         scene = new Scene(vbox, 300, 450);
-        scene.getStylesheets().add(getClass().getResource("/style/gui.css").toExternalForm());
+        scene.getStylesheets().add(CommonForm.class.getResource("/style/gui.css").toExternalForm());
+
+        return scene;
     }
 
+    public static Scene getMainForm()
+    {
+        return scene;
+    }
 }

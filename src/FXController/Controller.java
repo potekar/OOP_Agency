@@ -1,14 +1,29 @@
 package FXController;
 
+import data.Admin;
+import data.Client;
+import data.Database;
+import forms.CommonForm;
+import forms.LoginForm;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class Controller {
+public class Controller implements Initializable
+{
+
+    public Label lblNameLnameee=new Label("");
+    private Scene scene;
+    private Stage stage;
+    private Parent root;
 
     @FXML
     private Button btnFilters;
@@ -49,4 +64,55 @@ public class Controller {
     @FXML
     private TextField tfDestination;
 
+
+    //-------------------------------------FXML-----------------------------------------------
+
+
+
+
+    private Scene getFxmlScene(String name)
+    {
+        try {
+            return new Scene(FXMLLoader.load(getClass().getResource(name)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void switchToClientReservations(javafx.event.ActionEvent actionEvent) throws IOException {
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene=getFxmlScene("clientReservations.fxml");
+        scene.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
+        stage.setScene(scene);
+    }
+
+    public void switchToClientAllReservations(javafx.event.ActionEvent actionEvent) throws IOException {
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene=getFxmlScene("clientNewReservation.fxml");
+        scene.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
+        stage.setScene(scene);
+    }
+
+    public void changePassword(javafx.event.ActionEvent actionEvent)
+    {
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene= CommonForm.changePassword(Client.getActiveUser().getUsername());
+        stage.setScene(scene);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if(LoginForm.set[0].equals("user"))
+        {
+            lblNameLname.setText(Client.getActiveUser().getName()+" "+Client.getActiveUser().getLname());
+            lblUsername.setText(Client.getActiveUser().getUsername());
+        }
+        else
+        {
+            lblNameLname.setText(Admin.getActiveAdmin().getName()+" "+Admin.getActiveAdmin().getLastName());
+            lblUsername.setText(Admin.getActiveAdmin().getUsername());
+        }
+
+    }
 }

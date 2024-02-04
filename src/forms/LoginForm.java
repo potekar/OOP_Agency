@@ -1,6 +1,10 @@
 package forms;
 
+import FXController.Controller;
+import data.Admin;
+import data.Client;
 import data.Database;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginForm {
@@ -22,6 +27,9 @@ public class LoginForm {
     private PasswordField pfPassword = new PasswordField();
     private Label lbError=new Label();
     static Stage primaryStage;
+
+    static public String[] set;
+    Controller con=new Controller();
     public LoginForm(Database database, Stage primaryStage) throws FileNotFoundException{
 
         this.database=database;
@@ -44,7 +52,9 @@ public class LoginForm {
         btnLogin.setOnAction(e-> {
             try {
                 checkLogin();
-            } catch (SQLException ex) {
+            } catch (SQLException ee) {
+                throw new RuntimeException(ee);
+            } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -73,8 +83,8 @@ public class LoginForm {
         return scene;
     }
 
-    private void checkLogin() throws SQLException {
-        String[] set=database.login(tfUsername.getText(),pfPassword.getText());
+    private void checkLogin() throws SQLException, IOException {
+         set=database.login(tfUsername.getText(),pfPassword.getText());
 
         if (set==null)
         {
@@ -89,17 +99,25 @@ public class LoginForm {
 
                 if(pfPassword.getText().equals("12345678"))
                 {
-                    adminForm.adminFirstLogin();
+                    adminForm.adminFirstLogin(tfUsername.getText());
                 }
-
-                primaryStage.setScene(adminForm.getMainForm());
-                primaryStage.show();
+                else {
+                    Admin.setActiveAdmin(database.getActiveAdmin(tfUsername.getText()));
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("/FXController/adminScene.fxml"));
+                    Scene sc = new Scene(fxmlLoader.load());
+                    sc.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
+                    primaryStage.setScene(sc);
+                    primaryStage.show();
+                }
             }
 
             if (set[0].equals("user"))
             {
-                MainForm mainForm=new MainForm(database,primaryStage,set);
-                primaryStage.setScene(mainForm.getMainForm());
+                Client.activeUser=database.getActiveClient(tfUsername.getText());
+                FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("/FXController/clientScene.fxml"));
+                Scene sc=new Scene(fxmlLoader.load());
+                sc.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
+                primaryStage.setScene(sc);
                 primaryStage.show();
             }
         }

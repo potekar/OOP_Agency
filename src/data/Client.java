@@ -10,9 +10,11 @@ public class Client {
     private String password;
     private int id;
 
+    public static Client activeUser;
 
 
-    public Client(int id,String name, String lname, String phone, String jbmg, String accountNumber, String username, String password) {
+
+    public Client(int id, String name, String lname, String phone, String jbmg, String accountNumber, String username, String password) {
         this.id=id;
         this.name = name;
         this.lname = lname;
@@ -85,5 +87,25 @@ public class Client {
 
     public String getPassword() {
         return password;
+    }
+
+    public static  Client getActiveUser() {
+        return activeUser;
+    }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Client{");
+        sb.append("name='").append(name).append('\n');
+        sb.append(", lname='").append(lname).append('\n');
+        sb.append(", phone='").append(phone).append('\n');
+        sb.append(", jbmg='").append(jbmg).append('\n');
+        sb.append(", accountNumber='").append(accountNumber).append('\n');
+        sb.append(", username='").append(username).append('\n');
+        sb.append(", password='").append(password).append('\n');
+        sb.append(", id=").append(id);
+        sb.append('}');
+        return sb.toString();
     }
 }

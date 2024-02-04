@@ -90,7 +90,7 @@
                                     <Font size="21.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="btnDeleteTrip" layoutX="232.0" layoutY="422.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #e44744; -fx-background-radius: 20;" text="Add new trip">
+                              <Button fx:id="btnDeleteTrip" layoutX="232.0" layoutY="422.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #e44744; -fx-background-radius: 20;" text="Delete trip">
                                  <font>
                                     <Font name="Roboto" size="16.0" />
                                  </font>

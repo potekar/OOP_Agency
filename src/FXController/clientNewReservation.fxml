@@ -35,17 +35,17 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnNewReservation" layoutX="59.0" layoutY="287.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="New Reservation">
+                <Button fx:id="btnNewReservation" layoutX="59.0" layoutY="287.0" mnemonicParsing="false" onAction="#switchToClientAllReservations" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="New Reservation">
                     <font>
                         <Font name="Roboto" size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnReservations" layoutX="58.0" layoutY="377.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Reservations">
+                <Button fx:id="btnReservations" layoutX="58.0" layoutY="377.0" mnemonicParsing="false" onAction="#switchToClientReservations" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Reservations">
                     <font>
                         <Font name="Roboto" size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnPasswordChange" layoutX="82.0" layoutY="628.0" mnemonicParsing="false" style="-fx-background-color: #20242b;" text="Change your password" textFill="#284474" />
+                <Button fx:id="btnPasswordChange" layoutX="82.0" layoutY="628.0" mnemonicParsing="false" onAction="#changePassword" style="-fx-background-color: #20242b;" text="Change your password" textFill="#284474" />
             </children>
         </AnchorPane>
     </left>
