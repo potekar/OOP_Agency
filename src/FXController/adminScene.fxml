@@ -28,18 +28,18 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnNewTrip" layoutX="60.0" layoutY="274.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new trip">
+                <Button fx:id="btnNewTrip" layoutX="60.0" layoutY="274.0" mnemonicParsing="false" onAction="#switchToAdminNewTrip" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new trip">
                     <font>
                         <Font name="Roboto" size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnNewAdmin" layoutX="60.0" layoutY="350.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new admin">
+                <Button fx:id="btnNewAdmin" layoutX="60.0" layoutY="350.0" mnemonicParsing="false" onAction="#switchToNewAdmin" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new admin">
                     <font>
                         <Font name="Roboto" size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnPasswordChange" layoutX="82.0" layoutY="628.0" mnemonicParsing="false" style="-fx-background-color: #20242b;" text="Change your password" textFill="#284474" />
-            <Button fx:id="btnAllTrips" layoutX="60.0" layoutY="426.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="All trips">
+                <Button fx:id="btnPasswordChange" layoutX="82.0" layoutY="628.0" mnemonicParsing="false" onAction="#changePasswordAdmin" style="-fx-background-color: #20242b;" text="Change your password" textFill="#284474" />
+            <Button fx:id="btnAllTrips" layoutX="60.0" layoutY="426.0" mnemonicParsing="false" onAction="#switchToAdminAllTrips" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="All trips">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>

@@ -33,7 +33,7 @@ public class AdminForm {
     }
     //-----------------------------------------------------------------------------
 
-    public void adminFirstLogin(String ussername)
+    public void adminFirstLogin(String username)
     {
         Label lbError=new Label();
         PasswordField pfPassword = new PasswordField();
@@ -52,7 +52,7 @@ public class AdminForm {
         btnLogin.setOnAction(e-> {
             if(pfPassword.getText().equals(pfPasswordCheck.getText()))
             {
-                if(database.changeAdminPassword(ussername,pfPassword.getText()))
+                if(database.changeAdminPassword(username,pfPassword.getText()))
                 {
                     System.out.println("done");
                     AdminForm adminForm=new AdminForm(database,primaryStage,set);
@@ -69,7 +69,7 @@ public class AdminForm {
         vbox.getChildren().addAll( imageView, pfPassword, pfPasswordCheck,btnLogin, btnCancel);
 
         scene = new Scene(vbox, 300, 450);
-        scene.getStylesheets().add(getClass().getResource("/style/gui.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
     }
 
 }

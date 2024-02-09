@@ -21,18 +21,25 @@ public class Main extends Application{
 
     @Override
     public void start(Stage stage) throws IOException {
+        stage.setResizable(false);
         LoginForm log=new LoginForm(database,stage);
         CommonForm com=new CommonForm(database,stage);
 
-//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FXController/clientScene.fxml"));
-
+//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FXController/clientReservations.fxml"));
 //        Scene sc=new Scene(fxmlLoader.load());
-        Scene sc=LoginForm.getLoginForm();
-        sc.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
 
+
+        Scene sc=LoginForm.getLoginForm();
+
+        sc.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
         stage.setTitle("Agency...");
         stage.getIcons().add(new Image("/style/logo.png"));
         stage.setScene(sc);
         stage.show();
+    }
+
+    public static Database getDatabase()
+    {
+        return database;
     }
 }

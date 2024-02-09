@@ -2,11 +2,11 @@ package data;
 
 public class Reservation {
     private int clientId;
-    private int arrangementId;
+    private String arrangementId;
     private double totalPrice;
     private double paidPrice;
 
-    public Reservation(int clientId, int arrangementId, double totalPrice, double paidPrice) {
+    public Reservation(int clientId, String arrangementId, double totalPrice, double paidPrice) {
         this.clientId = clientId;
         this.arrangementId = arrangementId;
         this.totalPrice = totalPrice;
@@ -21,11 +21,11 @@ public class Reservation {
         this.clientId = clientId;
     }
 
-    public int getArrangementId() {
+    public String getArrangementId() {
         return arrangementId;
     }
 
-    public void setArrangementId(int arrangementId) {
+    public void setArrangementId(String arrangementId) {
         this.arrangementId = arrangementId;
     }
 

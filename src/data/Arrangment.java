@@ -3,7 +3,7 @@ package data;
 import java.text.DateFormat;
 
 public class Arrangment {
-    private int id;
+    private String id;
     private String tripName;
     private String destination;
     private String transportation;
@@ -12,7 +12,7 @@ public class Arrangment {
     private double arrangmentPrice;
     private int accommodationID;
 
-    public Arrangment(int id, String tripName, String destination, String transportation, String departureDate, String returnDate, double arrangmentPrice, int accommodationID) {
+    public Arrangment(String id, String tripName, String destination, String transportation, String departureDate, String returnDate, double arrangmentPrice, int accommodationID) {
         this.id = id;
         this.tripName = tripName;
         this.destination = destination;
@@ -23,11 +23,11 @@ public class Arrangment {
         this.accommodationID = accommodationID;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -85,5 +85,20 @@ public class Arrangment {
 
     public void setAccommodationID(int accommodationID) {
         this.accommodationID = accommodationID;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Arrangment{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", tripName='").append(tripName).append('\'');
+        sb.append(", destination='").append(destination).append('\'');
+        sb.append(", transportation='").append(transportation).append('\'');
+        sb.append(", departureDate='").append(departureDate).append('\'');
+        sb.append(", returnDate='").append(returnDate).append('\'');
+        sb.append(", arrangmentPrice=").append(arrangmentPrice);
+        sb.append(", accommodationID=").append(accommodationID);
+        sb.append("\n");
+        return sb.toString();
     }
 }

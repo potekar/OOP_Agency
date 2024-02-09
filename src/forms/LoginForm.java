@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,9 +24,9 @@ import java.sql.SQLException;
 public class LoginForm {
     private static Scene scene;
     private static  Database database;
-    private TextField tfUsername = new TextField();
-    private PasswordField pfPassword = new PasswordField();
-    private Label lbError=new Label();
+    private static TextField tfUsername = new TextField();
+    private static PasswordField pfPassword = new PasswordField();
+    private static Label lbError=new Label();
     static Stage primaryStage;
 
     static public String[] set;
@@ -63,6 +64,16 @@ public class LoginForm {
             primaryStage.setScene(RegisterForm.getRegisterForm(database,primaryStage));
             primaryStage.show();
             System.out.println("clicked");
+        });
+
+        pfPassword.setOnAction(e->{
+            try {
+                checkLogin();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         btnRegister.setStyle("-fx-background-color: #20242b; -fx-text-fill: #4184cf;");
@@ -105,7 +116,7 @@ public class LoginForm {
                     Admin.setActiveAdmin(database.getActiveAdmin(tfUsername.getText()));
                     FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("/FXController/adminScene.fxml"));
                     Scene sc = new Scene(fxmlLoader.load());
-                    sc.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
+                    sc.getStylesheets().add(LoginForm.class.getResource("/style/guiTest.css").toExternalForm());
                     primaryStage.setScene(sc);
                     primaryStage.show();
                 }
@@ -116,7 +127,7 @@ public class LoginForm {
                 Client.activeUser=database.getActiveClient(tfUsername.getText());
                 FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("/FXController/clientScene.fxml"));
                 Scene sc=new Scene(fxmlLoader.load());
-                sc.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
+                sc.getStylesheets().add(LoginForm.class.getResource("/style/guiTest.css").toExternalForm());
                 primaryStage.setScene(sc);
                 primaryStage.show();
             }

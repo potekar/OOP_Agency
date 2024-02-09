@@ -18,28 +18,28 @@
                         <Image url="@../style/logo.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="lblNameLname" layoutX="75.0" layoutY="149.0" text="Name Lastname" textAlignment="CENTER" textFill="#4184cf">
+                <Label fx:id="lblNameLname" alignment="CENTER" layoutX="75.0" layoutY="149.0" text="Name Lastname" textFill="#4184cf">
                     <font>
                         <Font size="21.0" />
                     </font>
                 </Label>
-                <Label fx:id="lblUsername" layoutX="116.0" layoutY="180.0" text="Username" textFill="#284474">
+                <Label fx:id="lblUsername" alignment="CENTER" layoutX="116.0" layoutY="180.0" text="Username" textFill="#284474">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnNewTrip" layoutX="60.0" layoutY="274.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new trip">
+                <Button fx:id="btnNewTrip" layoutX="60.0" layoutY="274.0" mnemonicParsing="false" onAction="#switchToAdminNewTrip" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new trip">
                     <font>
                         <Font name="Roboto" size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnNewAdmin" layoutX="60.0" layoutY="350.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new admin">
+                <Button fx:id="btnNewAdmin" layoutX="60.0" layoutY="350.0" mnemonicParsing="false" onAction="#switchToNewAdmin" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Add new admin">
                     <font>
                         <Font name="Roboto" size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnPasswordChange" layoutX="82.0" layoutY="628.0" mnemonicParsing="false" style="-fx-background-color: #20242b;" text="Change your password" textFill="#284474" />
-                <Button fx:id="btnAllTrips" layoutX="60.0" layoutY="426.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="All trips">
+                <Button fx:id="btnPasswordChange" layoutX="82.0" layoutY="628.0" mnemonicParsing="false" onAction="#changePasswordAdmin" style="-fx-background-color: #20242b;" text="Change your password" textFill="#284474" />
+                <Button fx:id="btnAllTrips" layoutX="60.0" layoutY="426.0" mnemonicParsing="false" onAction="#switchToAdminAllTrips" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="All trips">
                     <font>
                         <Font name="Roboto" size="16.0" />
                     </font>
@@ -75,26 +75,31 @@
                   <Font size="21.0" />
                </font>
             </Label>
-            <TextField layoutX="189.0" layoutY="65.0" promptText="name">
+            <TextField fx:id="tfNewAdminName" layoutX="189.0" layoutY="65.0" promptText="name">
                <font>
                   <Font size="21.0" />
                </font>
             </TextField>
-            <TextField layoutX="189.0" layoutY="124.0" promptText="lastname">
+            <TextField fx:id="tfNewAdminLname" layoutX="189.0" layoutY="124.0" promptText="lastname">
                <font>
                   <Font size="21.0" />
                </font>
             </TextField>
-            <TextField layoutX="189.0" layoutY="183.0" promptText="username">
+            <TextField fx:id="tfNewAdminUsername" layoutX="189.0" layoutY="183.0" promptText="username">
                <font>
                   <Font size="21.0" />
                </font>
             </TextField>
-            <Button fx:id="btnAddNewAdmin" layoutX="228.0" layoutY="291.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #88c877; -fx-background-radius: 20;" text="Add new admin">
+            <Button fx:id="btnAddNewAdmin" layoutX="228.0" layoutY="291.0" mnemonicParsing="false" onAction="#addNewAdmin" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #88c877; -fx-background-radius: 20;" text="Add new admin">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
             </Button>
+            <Label fx:id="lblNewAdminMessage" alignment="CENTER" layoutX="83.0" layoutY="245.0" prefHeight="30.0" prefWidth="474.0" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
     </right>
 </BorderPane>
