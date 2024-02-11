@@ -39,3 +39,6 @@
     -fx-font-size: 20px;
 }
 
+#cbMStarsC .label,#cbMTransportC .label,#cbRoomTypeC .label{
+    -fx-font-size: 12px;
+}

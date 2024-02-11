@@ -3,6 +3,8 @@ package FXController;
 import data.*;
 import forms.CommonForm;
 import forms.LoginForm;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +17,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller implements Initializable {
 
@@ -51,7 +51,13 @@ public class Controller implements Initializable {
     private DatePicker calDate;
 
     @FXML
+    private DatePicker calDepartureC;
+
+    @FXML
     private DatePicker calReturn;
+
+    @FXML
+    private DatePicker calReturnC;
 
     @FXML
     private ChoiceBox<String> cbRoomType = new ChoiceBox<>();
@@ -61,6 +67,18 @@ public class Controller implements Initializable {
 
     @FXML
     private ChoiceBox<String> cbMTransport = new ChoiceBox<>();
+
+    @FXML
+    private ChoiceBox<String> cbRoomTypeC = new ChoiceBox<>();
+
+    @FXML
+    private ChoiceBox<String> cbMStarsC = new ChoiceBox<>();
+
+    @FXML
+    private ChoiceBox<String> cbMTransportC = new ChoiceBox<>();
+
+    @FXML
+    private Label lblAdminCount=new Label();
 
     @FXML
     private Label lblNameLname;
@@ -99,7 +117,7 @@ public class Controller implements Initializable {
     private Label lblClientBalance=new Label();
 
     @FXML
-    private Slider sldPrice;
+    private Slider sldPrice=new Slider();
 
     @FXML
     private TextField tfDestination;
@@ -286,6 +304,16 @@ public class Controller implements Initializable {
                 if (database.addNewMultiTrip(name, destination, arrivalDate, returnDate, transport, hotel, stars, pricePer, roomType, Integer.toString(price))) {
                     lblMtripMessage.setText("Trip added successfully");
                     lblMtripMessage.setStyle("-fx-text-fill: #88c877");
+
+                    tfMName.clear();
+                    tfMDestination.clear();
+                    tfPricePer.clear();
+                    calArrival.setValue(null);
+                    calReturn.setValue(null);
+                    tfMHotel.clear();
+                    cbMTransport.getSelectionModel().clearSelection();
+                    cbMStars.getSelectionModel().clearSelection();
+                    cbRoomType.getSelectionModel().clearSelection();
                 }
             } else {
                 lblMtripMessage.setText("Price per night must be a number");
@@ -319,6 +347,11 @@ public class Controller implements Initializable {
     private void updateBalance()
     {
         lblClientBalance.setText("Balance: "+database.getFounds(Client.getActiveUser().getAccountNumber()));
+    }
+
+    private void updateAdminCount()
+    {
+        lblAdminCount.setText(""+database.getNumberOfAdmins());
     }
 
 
@@ -439,10 +472,10 @@ public class Controller implements Initializable {
         });
     }
 
-    public void updateClientLists() {
+    public void updateClientLists(List<Arrangment> arrangments) {
         listOne.getItems().clear();
         listMulti.getItems().clear();
-        List<Arrangment> list = database.getArrangements();
+        List<Arrangment> list = arrangments;
 
         for (Arrangment arrangment : list) {
             if (arrangment.getDepartureDate().equals(arrangment.getReturnDate())) {
@@ -601,6 +634,109 @@ public class Controller implements Initializable {
         }
     }
 
+    public void filter()
+    {
+
+        String destination=null;
+        double price=0;
+        String departureDate=null;
+        String returnDate=null;
+        String roomType=null;
+        int stars=0;
+        String trans=null;
+
+        try {
+            destination=tfMDestination.getText();
+        }
+        catch (Exception e){}
+
+        try {
+            price=sldPrice.getValue();
+        }
+        catch (Exception e){}
+
+        try {
+            departureDate=calDepartureC.getValue().toString();
+        }
+        catch (Exception e){}
+
+        try {
+            returnDate=calReturnC.getValue().toString();
+        }
+        catch (Exception e){}
+
+        try {
+            roomType= cbRoomTypeC.getValue();
+        }
+        catch (Exception e){}
+
+        try {
+            stars=Integer.parseInt(cbMStarsC.getValue());
+        }
+        catch (Exception e){}
+
+        try {
+            trans=cbMTransportC.getValue();
+        }
+        catch (Exception e){}
+
+
+        List<Arrangment> arrangments=database.getArrangements();
+        List<Arrangment> list=new ArrayList<>();
+
+        System.out.println(price);
+
+        for(Arrangment a:arrangments)
+        {
+            boolean isFiltered=true;
+            Accommodation acc=null;
+            if (!a.getDepartureDate().equals(a.getReturnDate()))
+            {
+                acc=database.getAccomodation(a.getAccommodationID());
+            }
+
+            if(destination!=null && !a.getDestination().equals(destination))
+            {
+                isFiltered=false;
+            }
+
+            if(isFiltered && price!=0 && a.getArrangmentPrice()>=price)
+            {
+                isFiltered=false;
+            }
+            if(isFiltered && departureDate!=null && !departureDate.equals(a.getDepartureDate()))
+            {
+                isFiltered=false;
+            }
+            if(isFiltered && returnDate!=null && !returnDate.equals(a.getReturnDate()))
+            {
+                isFiltered=false;
+            }
+            if(isFiltered && roomType!=null && acc!=null && !roomType.equals(acc.getRoomType()))
+            {
+                isFiltered=false;
+            }
+
+            if(isFiltered && stars!=0 && acc!=null && stars!=acc.getNumberOfStars())
+            {
+                isFiltered=false;
+            }
+
+            if(isFiltered && trans!=null && acc!=null && !trans.equals(a.getTransportation()))
+            {
+                isFiltered=false;
+            }
+
+            if(isFiltered)
+            {
+                list.add(a);
+            }
+        }
+
+        updateClientLists(list);
+
+    }
+
    //-------------------------------------Other-------------------------------------------------------
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -611,24 +747,30 @@ public class Controller implements Initializable {
         cbMStars.getItems().addAll("1","2","3","4","5");
         cbMTransport.getItems().addAll("Plane","Bus","Personal");
 
+        cbMStarsC.getItems().addAll("1","2","3","4","5");
+        cbMTransportC.getItems().addAll("Plane","Bus","Personal");
+        cbRoomTypeC.getItems().addAll("Single-bed","Two-bed","Triple-bed","Apartman");
+
 //        lblUsername.setText("test");
 //        lblNameLname.setText("test");
 
-        updateClientLists();
-        updateAdminLists();
-        updateProfit();
-        updateClientReservations();
-        updateBalance();
+
 
         if(LoginForm.set[0].equals("user"))
         {
             lblNameLname.setText(Client.getActiveUser().getName()+" "+Client.getActiveUser().getLname());
             lblUsername.setText(Client.getActiveUser().getUsername());
+            updateClientLists(database.getArrangements());
+            updateClientReservations();
+            updateBalance();
         }
         else
         {
             lblNameLname.setText(Admin.getActiveAdmin().getName()+" "+Admin.getActiveAdmin().getLastName());
             lblUsername.setText(Admin.getActiveAdmin().getUsername());
+            updateAdminLists();
+            updateProfit();
+            updateAdminCount();
         }
 
     }

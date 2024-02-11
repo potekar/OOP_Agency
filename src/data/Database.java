@@ -607,5 +607,21 @@ public class Database {
         return false;
     }
 
+    public int getNumberOfAdmins()
+    {
+        try {
+            int num=0;
+            PreparedStatement statement= connection.prepareStatement("SELECT * FROM admin WHERE lozinka!="+"12345678");
+            ResultSet set=statement.executeQuery();
 
+            while (set.next())
+            {
+                num++;
+            }
+
+            return num;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

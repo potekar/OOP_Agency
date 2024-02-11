@@ -1,6 +1,8 @@
 package forms;
 
+import data.Admin;
 import data.Database;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class AdminForm {
@@ -55,8 +58,17 @@ public class AdminForm {
                 if(database.changeAdminPassword(username,pfPassword.getText()))
                 {
                     System.out.println("done");
-                    AdminForm adminForm=new AdminForm(database,primaryStage,set);
-                    primaryStage.setScene(adminForm.getMainForm());
+                    Admin.setActiveAdmin(database.getActiveAdmin(username));
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("/FXController/adminScene.fxml"));
+                    Scene sc = null;
+                    try {
+                        sc = new Scene(fxmlLoader.load());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    sc.getStylesheets().add(LoginForm.class.getResource("/style/guiTest.css").toExternalForm());
+                    primaryStage.setScene(sc);
+                    primaryStage.show();
                 }
             }
         });
@@ -69,7 +81,10 @@ public class AdminForm {
         vbox.getChildren().addAll( imageView, pfPassword, pfPasswordCheck,btnLogin, btnCancel);
 
         scene = new Scene(vbox, 300, 450);
-        scene.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/style/gui.css").toExternalForm());
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
 }

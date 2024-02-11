@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -83,48 +83,48 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <DatePicker fx:id="calDeparture" layoutX="126.0" layoutY="429.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #20242b;" />
+            <DatePicker fx:id="calDepartureC" layoutX="126.0" layoutY="429.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #20242b;" />
             <Label layoutX="372.0" layoutY="431.0" text="Return date:" textFill="#4184cf">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <DatePicker fx:id="calReturn" layoutX="458.0" layoutY="429.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #20242b;" />
+            <DatePicker fx:id="calReturnC" layoutX="458.0" layoutY="429.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #20242b;" />
             <Label layoutX="17.0" layoutY="485.0" text="Max price:" textFill="#4184cf">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Slider fx:id="sldPrice" blockIncrement="100.0" layoutX="123.0" layoutY="485.0" majorTickUnit="1000.0" max="5000.0" minorTickCount="100" prefHeight="39.0" prefWidth="160.0" showTickLabels="true" showTickMarks="true" value="2500.0" />
+            <Slider fx:id="sldPrice" blockIncrement="100.0" layoutX="123.0" layoutY="485.0" majorTickUnit="1000.0" max="5000.0" minorTickCount="100" prefHeight="39.0" prefWidth="160.0" showTickLabels="true" showTickMarks="true" />
             <Label layoutX="372.0" layoutY="486.0" text="Destination:" textFill="#4184cf">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="tfDestination" layoutX="458.0" layoutY="483.0" prefHeight="25.0" prefWidth="150.0" />
+            <TextField fx:id="tfDestination" layoutX="458.0" layoutY="483.0" prefHeight="25.0" prefWidth="150.0" promptText="destination" />
             <Label layoutX="17.0" layoutY="542.0" text="Room type:" textFill="#4184cf">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="combRoomType" layoutX="126.0" layoutY="540.0" prefWidth="150.0" />
             <Label layoutX="372.0" layoutY="542.0" text="Star # :" textFill="#4184cf">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="combStars" layoutX="458.0" layoutY="540.0" prefWidth="150.0" />
             <Label layoutX="15.0" layoutY="607.0" prefHeight="20.0" prefWidth="75.0" text="Transport:" textFill="#4184cf">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="combTransport" layoutX="126.0" layoutY="604.0" prefWidth="150.0" />
-            <Button fx:id="btnFilters" layoutX="469.0" layoutY="596.0" mnemonicParsing="false" onAction="#addReservation" prefHeight="41.0" prefWidth="128.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Apply filters">
+            <Button fx:id="btnFilters" layoutX="469.0" layoutY="596.0" mnemonicParsing="false" onAction="#filter" prefHeight="41.0" prefWidth="128.0" style="-fx-background-color: #4184cf; -fx-background-radius: 20;" text="Apply filters">
                <font>
                   <Font name="Roboto" size="16.0" />
                </font>
             </Button>
+            <ChoiceBox fx:id="cbRoomTypeC" layoutX="126.0" layoutY="543.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="cbMStarsC" layoutX="458.0" layoutY="540.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="cbMTransportC" layoutX="126.0" layoutY="605.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
    </center>
