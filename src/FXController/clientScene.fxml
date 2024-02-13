@@ -46,6 +46,11 @@
       <AnchorPane prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #282c34;" BorderPane.alignment="CENTER">
          <children>
             <TabPane layoutX="21.0" layoutY="31.0" prefHeight="282.0" prefWidth="660.0" tabClosingPolicy="UNAVAILABLE" />
+            <Label fx:id="lblInfo" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="147.0" prefHeight="369.0" prefWidth="663.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
    </right>
 </BorderPane>

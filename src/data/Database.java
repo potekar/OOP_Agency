@@ -1,8 +1,11 @@
 package data;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Database {
 
@@ -479,7 +482,6 @@ public class Database {
         }
 
         try {
-            System.out.println("sss");
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO rezervacija (Klijent_id,Aranzman_id,ukupna_cijena,placena_cijena) values (?,?,?,?)");
 
             System.out.println(client.getId());
@@ -553,6 +555,42 @@ public class Database {
         }
     }
 
+    public Reservation getReservation(String id)
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet set;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM rezervacija WHERE Klijent_id=? AND Aranzman_id=?");
+            preparedStatement.setInt(1,Client.getActiveUser().getId());
+            preparedStatement.setString(2,id);
+            set = preparedStatement.executeQuery();
+            set.next();
+
+            return new Reservation(set.getInt(1), set.getString(2), set.getDouble(3), set.getDouble(4) );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Arrangment getArrangment(String id)
+    {
+        try {
+            ResultSet resultSet = null;
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM aranzman WHERE id=?");
+            statement.setString(1,id);
+            resultSet = statement.executeQuery();
+
+            resultSet.next();
+            return new Arrangment(resultSet.getString(1), resultSet.getString(2),
+                    resultSet.getString(3), resultSet.getString(4),
+                    resultSet.getString(5), resultSet.getString(6),
+                    resultSet.getDouble(7), resultSet.getInt(8));
+            }
+         catch (SQLException e) {throw new RuntimeException(e);
+        }
+    }
+
     public boolean deleteReservation(Client client,String tripId)
     {
         try {
@@ -571,11 +609,47 @@ public class Database {
     public boolean cancelReservation(Client client,String id)
     {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE rezervacija SET placena_cijena=? WHERE Klijent_id=? AND Aranzman_id=?");
-            preparedStatement.setDouble(1,-2);
-            preparedStatement.setInt(2, client.getId());
-            preparedStatement.setString(3,id);
-            preparedStatement.execute();
+            Reservation currentRes = getReservation(id);
+            Arrangment currentArr = getArrangment(id);
+
+            if (LocalDate.now().isBefore(LocalDate.parse(currentArr.getDepartureDate())))
+            {
+                if(ChronoUnit.DAYS.between(LocalDate.parse(currentArr.getDepartureDate()),LocalDate.now())>=14)
+                {
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE bankovni_racun SET stanje=? WHERE broj_racuna=?");
+                    preparedStatement.setDouble(1,getFounds(client.getAccountNumber())+currentRes.getPaidPrice());
+                    preparedStatement.setString(2, client.getAccountNumber());
+                    preparedStatement.execute();
+
+                    preparedStatement = connection.prepareStatement("UPDATE bankovni_racun SET stanje=? WHERE broj_racuna=1234567887654321");
+                    preparedStatement.setDouble(1,getProfit()-currentRes.getPaidPrice());
+                    preparedStatement.execute();
+
+                    preparedStatement = connection.prepareStatement("UPDATE rezervacija SET placena_cijena=? WHERE Klijent_id=? AND Aranzman_id=?");
+                    preparedStatement.setDouble(1,-2);
+                    preparedStatement.setInt(2, client.getId());
+                    preparedStatement.setString(3,id);
+                    preparedStatement.execute();
+                }
+
+                else
+                {
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE bankovni_racun SET stanje=? WHERE broj_racuna=?");
+                    preparedStatement.setDouble(1,getFounds(client.getAccountNumber())+(currentRes.getTotalPrice()/2));
+                    preparedStatement.setString(2, client.getAccountNumber());
+                    preparedStatement.execute();
+
+                    preparedStatement = connection.prepareStatement("UPDATE bankovni_racun SET stanje=? WHERE broj_racuna=1234567887654321");
+                    preparedStatement.setDouble(1,getProfit()-(currentRes.getTotalPrice()/2));
+                    preparedStatement.execute();
+
+                    preparedStatement = connection.prepareStatement("UPDATE rezervacija SET placena_cijena=? WHERE Klijent_id=? AND Aranzman_id=?");
+                    preparedStatement.setDouble(1,-2);
+                    preparedStatement.setInt(2, client.getId());
+                    preparedStatement.setString(3,id);
+                    preparedStatement.execute();
+                }
+            }
 
             return true;
         } catch (SQLException e) {
@@ -584,6 +658,54 @@ public class Database {
         return false;
     }
 
+    public void pastReservation()
+    {
+        Client client=Client.getActiveUser();
+        for(Reservation r: getClientReservations(client))
+        {
+            String id=r.getArrangementId();
+            try {
+                Reservation currentRes = getReservation(id);
+                Arrangment currentArr = getArrangment(id);
+
+                System.out.println(-1*(ChronoUnit.DAYS.between(LocalDate.parse(currentArr.getDepartureDate()),LocalDate.now())));
+                System.out.println(LocalDate.now().isBefore(LocalDate.parse(currentArr.getDepartureDate())));
+                if (LocalDate.now().isBefore(LocalDate.parse(currentArr.getDepartureDate())))
+                {
+                    if(-1*(ChronoUnit.DAYS.between(LocalDate.parse(currentArr.getDepartureDate()),LocalDate.now()))<14)
+                    {
+                        if (currentRes.getTotalPrice()!=currentRes.getPaidPrice())
+                        {
+                            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE rezervacija SET placena_cijena=? WHERE Klijent_id=? AND Aranzman_id=?");
+                            preparedStatement.setDouble(1,-2);
+                            preparedStatement.setInt(2, client.getId());
+                            preparedStatement.setString(3,id);
+                            preparedStatement.execute();
+
+                            preparedStatement = connection.prepareStatement("UPDATE bankovni_racun SET stanje=? WHERE broj_racuna=?");
+                            preparedStatement.setDouble(1,getFounds(client.getAccountNumber())+(currentRes.getTotalPrice()/2));
+                            preparedStatement.setString(2, client.getAccountNumber());
+                            preparedStatement.execute();
+
+                            preparedStatement = connection.prepareStatement("UPDATE bankovni_racun SET stanje=? WHERE broj_racuna=1234567887654321");
+                            preparedStatement.setDouble(1,getProfit()-(currentRes.getTotalPrice()/2));
+                            preparedStatement.execute();
+                        }
+                    }
+                }
+                else
+                {
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE rezervacija SET placena_cijena=? WHERE Klijent_id=? AND Aranzman_id=?");
+                    preparedStatement.setDouble(1,-1);
+                    preparedStatement.setInt(2, client.getId());
+                    preparedStatement.setString(3,id);
+                    preparedStatement.execute();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public boolean processPayment(Reservation reservation,Client client,double money)
     {
         try {
@@ -623,5 +745,28 @@ public class Database {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public List<Reservation> getThreeDayLeft()
+    {
+        List<Reservation> reservations=getClientReservations(Client.getActiveUser());
+        List<Reservation> toBePayed=new ArrayList<>();
+
+        for (Reservation r:reservations)
+        {
+            if(LocalDate.now().isBefore(LocalDate.parse(getArrangment(r.getArrangementId()).getDepartureDate())))
+            {
+                if(-1*ChronoUnit.DAYS.between(LocalDate.parse(getArrangment(r.getArrangementId()).getDepartureDate()),LocalDate.now())<=17)
+                {
+                    if(r.getTotalPrice()>r.getPaidPrice() && r.getPaidPrice()>=0)
+                    {
+                        toBePayed.add(r);
+                    }
+                }
+            }
+        }
+
+        return toBePayed;
     }
 }

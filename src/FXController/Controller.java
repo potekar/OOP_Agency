@@ -45,19 +45,19 @@ public class Controller implements Initializable {
     private Button btnReservations;
 
     @FXML
-    private DatePicker calArrival;
+    private DatePicker calArrival=new DatePicker();
 
     @FXML
-    private DatePicker calDate;
+    private DatePicker calDate=new DatePicker();
 
     @FXML
-    private DatePicker calDepartureC;
+    private DatePicker calDepartureC=new DatePicker();
 
     @FXML
-    private DatePicker calReturn;
+    private DatePicker calReturn=new DatePicker();
 
     @FXML
-    private DatePicker calReturnC;
+    private DatePicker calReturnC=new DatePicker();
 
     @FXML
     private ChoiceBox<String> cbRoomType = new ChoiceBox<>();
@@ -115,6 +115,9 @@ public class Controller implements Initializable {
 
     @FXML
     private Label lblClientBalance=new Label();
+
+    @FXML
+    Label lblInfo=new Label();
 
     @FXML
     private Slider sldPrice=new Slider();
@@ -352,6 +355,22 @@ public class Controller implements Initializable {
     private void updateAdminCount()
     {
         lblAdminCount.setText(""+database.getNumberOfAdmins());
+    }
+
+    private String loginMessage()
+    {
+        StringBuilder msg=new StringBuilder();
+        List<Reservation> list = database.getThreeDayLeft();
+
+        if(list.size()>0)
+        {
+            msg.append("You have ").append(list.size()).append(" unpaid reservations:");
+            for (Reservation r :list)
+            {
+                msg.append("\n").append(r.getArrangementId());
+            }
+        }
+        return msg.toString();
     }
 
 
@@ -704,11 +723,11 @@ public class Controller implements Initializable {
             {
                 isFiltered=false;
             }
-            if(isFiltered && departureDate!=null && !departureDate.equals(a.getDepartureDate()))
+            if(isFiltered && departureDate!=null && LocalDate.parse(departureDate).isAfter(LocalDate.parse(a.getDepartureDate())))
             {
                 isFiltered=false;
             }
-            if(isFiltered && returnDate!=null && !returnDate.equals(a.getReturnDate()))
+            if(isFiltered && returnDate!=null && LocalDate.parse(returnDate).isBefore(LocalDate.parse(a.getReturnDate())))
             {
                 isFiltered=false;
             }
@@ -751,6 +770,38 @@ public class Controller implements Initializable {
         cbMTransportC.getItems().addAll("Plane","Bus","Personal");
         cbRoomTypeC.getItems().addAll("Single-bed","Two-bed","Triple-bed","Apartman");
 
+
+        calReturn.setDayCellFactory(d -> new DateCell() {
+            @Override public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                setDisable(item.isBefore(LocalDate.now()));
+            }});
+
+        calArrival.setDayCellFactory(d -> new DateCell() {
+            @Override public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                setDisable(item.isBefore(LocalDate.now()));
+            }});
+
+        calDate.setDayCellFactory(d -> new DateCell() {
+            @Override public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                setDisable(item.isBefore(LocalDate.now()));
+            }});
+
+        calReturnC.setDayCellFactory(d -> new DateCell() {
+            @Override public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                setDisable(item.isBefore(LocalDate.now()));
+            }});
+        calDepartureC.setDayCellFactory(d -> new DateCell() {
+            @Override public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                setDisable(item.isBefore(LocalDate.now()));
+            }});
+
+
+
 //        lblUsername.setText("test");
 //        lblNameLname.setText("test");
 
@@ -763,6 +814,10 @@ public class Controller implements Initializable {
             updateClientLists(database.getArrangements());
             updateClientReservations();
             updateBalance();
+            database.pastReservation();
+
+            lblInfo.setStyle("-fx-text-fill:"+RED);
+            lblInfo.setText(loginMessage());
         }
         else
         {

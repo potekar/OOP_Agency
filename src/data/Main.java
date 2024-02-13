@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+
 public class Main extends Application{
     static Database database=new Database();
     public static void main(String[] args) throws SQLException {
@@ -30,6 +32,8 @@ public class Main extends Application{
 
 
         Scene sc=LoginForm.getLoginForm();
+
+        System.out.println(LocalDate.now());
 
         sc.getStylesheets().add(getClass().getResource("/style/guiTest.css").toExternalForm());
         stage.setTitle("Agency...");

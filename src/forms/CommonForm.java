@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class CommonForm {
@@ -122,9 +123,11 @@ public class CommonForm {
         ImageView imageView=new ImageView(image);
         imageView.setFitHeight(80);
         imageView.setFitWidth(80);
-
+        System.out.println(LocalDate.now().isBefore(LocalDate.parse(arg.getDepartureDate())));
         if(arg.getReturnDate().equals(arg.getDepartureDate()))
         {
+
+
             Label lblName=new Label("Trip name: "+arg.getTripName());
             Label lblDestiantion=new Label("Destination: "+arg.getDestination());
             Label lblTransport=new Label("Transport Type: "+arg.getTransportation());
@@ -153,27 +156,28 @@ public class CommonForm {
             vbox.getChildren().addAll(logo,lblName,lblDestiantion,lblTransport,lblDeparture,lblPrice,buttons);
 
             btnReserve.setOnAction(e-> {
-                if(pfPassword.getText().equals(Client.getActiveUser().getPassword()))
-                {
-                    if (database.getFounds(Client.getActiveUser().getAccountNumber()) > arg.getArrangmentPrice() / 2)
-                    {
-                        List<Reservation> reservations=database.getClientReservations(Client.getActiveUser());
-                        for (Reservation reservation:reservations)
-                        {
-                            if(reservation.getArrangementId().equals(arg.getId())&&reservation.getPaidPrice()<0)
-                            {
-                                database.deleteReservation(Client.getActiveUser(),arg.getId());
-                                break;
+                if(pfPassword.getText().equals(Client.getActiveUser().getPassword())) {
+                    if (LocalDate.now().isBefore(LocalDate.parse(arg.getDepartureDate()))) {
+                        if (database.getFounds(Client.getActiveUser().getAccountNumber()) > arg.getArrangmentPrice() / 2) {
+                            List<Reservation> reservations = database.getClientReservations(Client.getActiveUser());
+                            for (Reservation reservation : reservations) {
+                                if (reservation.getArrangementId().equals(arg.getId()) && reservation.getPaidPrice() < 0) {
+                                    database.deleteReservation(Client.getActiveUser(), arg.getId());
+                                    break;
+                                }
                             }
-                        }
-                        database.addReservation(Client.getActiveUser(), arg.getTripName());
+                            database.addReservation(Client.getActiveUser(), arg.getTripName());
 
-                        lblError.setText("Reservation added successfully,\n new account balance is "+database.getFounds(Client.getActiveUser().getAccountNumber()));
-                        lblError.setStyle("-fx-text-fill: #88c877");
+                            lblError.setText("Reservation added successfully,\n new account balance is " + database.getFounds(Client.getActiveUser().getAccountNumber()));
+                            lblError.setStyle("-fx-text-fill: #88c877");
+                        } else {
+                            lblError.setText("Insufficient founds!");
+                            lblError.setStyle("-fx-text-fill: #e44744");
+                        }
                     }
                     else
                     {
-                        lblError.setText("Insufficient founds!");
+                        lblError.setText("Reservation is no longer available.");
                         lblError.setStyle("-fx-text-fill: #e44744");
                     }
                 }
@@ -233,23 +237,28 @@ public class CommonForm {
             btnReserve.setOnAction(e-> {
 
                 if(pfPassword.getText().equals(Client.getActiveUser().getPassword())) {
-                    if (database.getFounds(Client.getActiveUser().getAccountNumber()) > arg.getArrangmentPrice() / 2) {
-                        List<Reservation> reservations=database.getClientReservations(Client.getActiveUser());
-                        for (Reservation reservation:reservations)
-                        {
-                            if(reservation.getArrangementId().equals(arg.getId())&&reservation.getPaidPrice()<0)
-                            {
-                                database.deleteReservation(Client.getActiveUser(),arg.getId());
-                                break;
-                            }
-                        }
-                        database.addReservation(Client.getActiveUser(), arg.getTripName());
+                    if (LocalDate.now().isBefore(LocalDate.parse(arg.getDepartureDate()))) {
 
-                        lblError.setText("Reservation added successfully,\n new account balance is " + database.getFounds(Client.getActiveUser().getAccountNumber()));
-                        lblError.setStyle("-fx-text-fill: #88c877");
+                        if (database.getFounds(Client.getActiveUser().getAccountNumber()) > arg.getArrangmentPrice() / 2) {
+                            List<Reservation> reservations = database.getClientReservations(Client.getActiveUser());
+                            for (Reservation reservation : reservations) {
+                                if (reservation.getArrangementId().equals(arg.getId()) && reservation.getPaidPrice() < 0) {
+                                    database.deleteReservation(Client.getActiveUser(), arg.getId());
+                                    break;
+                                }
+                            }
+                            database.addReservation(Client.getActiveUser(), arg.getTripName());
+
+                            lblError.setText("Reservation added successfully,\n new account balance is " + database.getFounds(Client.getActiveUser().getAccountNumber()));
+                            lblError.setStyle("-fx-text-fill: #88c877");
+                        } else {
+                            lblError.setText("Insufficient founds!");
+                            lblError.setStyle("-fx-text-fill: #e44744");
+                        }
                     }
-                    else {
-                        lblError.setText("Insufficient founds!");
+                    else
+                    {
+                        lblError.setText("Reservation is no longer available.");
                         lblError.setStyle("-fx-text-fill: #e44744");
                     }
                 }
